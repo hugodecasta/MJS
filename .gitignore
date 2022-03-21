@@ -1,3 +1,8 @@
+auth/
+auth/*
+poll/
+poll/*
+
 # Logs
 logs
 *.log

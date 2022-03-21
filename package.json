@@ -4,7 +4,7 @@
   "description": "Majority Judgment Server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava tests.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,13 @@
   },
   "homepage": "https://github.com/hugodecasta/MJS#readme",
   "dependencies": {
+    "body-parser": "^1.19.2",
     "express": "^4.17.3",
+    "node-fetch": "^2.6.7",
+    "rimraf": "^3.0.2",
     "short-hash": "^1.0.0"
+  },
+  "devDependencies": {
+    "ava": "^4.1.0"
   }
 }
