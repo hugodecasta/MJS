@@ -1,0 +1,2 @@
+# MJS
+Majority Judgment Server
