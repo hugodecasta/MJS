@@ -10,9 +10,9 @@ const doc = {
         title: 'Majority Judgment Server',
         description: 'MJS API documentation',
     },
-    host: process.env.HOST ?? ('localhost:' + process.env.PORT ?? 3000),
+    host: process.env.HOST ?? ('localhost:' + (process.env.PORT ?? 3000)),
     basePath: '/api',
-    schemes: ['http', 'https'],
+    schemes: process.env.ALLOW_HTTP ? ['http', 'https'] : ['https'],
     securityDefinitions: {
         Auth_user: {
             type: 'apiKey',
