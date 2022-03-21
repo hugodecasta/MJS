@@ -85,10 +85,21 @@ poll_engine.get_poll_data = (id) => {
     return { name, grades, choices }
 }
 
-poll_engine.create_poll = (poll_data) => {
+poll_engine.get_list = () => {
+    return fs.readdirSync(polls_dir).map(f => f.replace('.json', ''))
+}
+
+poll_engine.get_owned_list = (owner) => {
+    return poll_engine.get_list().filter(id => fetch_poll(id).owner == hash(owner))
+}
+
+poll_engine.create_poll = (poll_data, owner) => {
     const id = hash(poll_data.name)
 
+    const hashed_owner = hash(owner)
+
     poll_data.id = id
+    poll_data.owner = hashed_owner
     poll_data.start = poll_data.start ?? null
     poll_data.voters = poll_data.voters ?? {}
     poll_data.grades = poll_data.grades ?? default_grades

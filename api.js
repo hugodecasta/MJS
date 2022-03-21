@@ -80,6 +80,14 @@ api.get('/', (req, res) => res.json('Yello'))
 
 // ----------------------------------- ADMIN
 
+
+api.get('/poll/list',
+    parse_auth, check_admin,
+    json_reser((req) =>/*
+        #swagger.security = [{"Auth_user": []}]
+        */
+        poll_engine.get_owned_list(req.auth_token)))
+
 api.post('/poll/create',
     parse_auth, check_admin, json_parser,
     json_reser((req) =>
@@ -107,7 +115,7 @@ api.post('/poll/create',
                schema: 'abcde1234'
         } 
        */
-        poll_engine.create_poll(req.body)))
+        poll_engine.create_poll(req.body, req.auth_token)))
 
 api.put('/poll/:id/start',
     parse_auth, check_admin, get_poll_id, check_poll_not_started, check_poll_not_closed,
@@ -189,7 +197,7 @@ api.delete('/poll/:id/voter',
         */
         poll_engine.remove_voter(req.poll_id, req.body.token)))
 
-// ----------------------------------- POLL
+// ----------------------------------- VOTE
 
 api.post('/poll/:id/vote',
     parse_auth, get_poll_id, check_vote_rights, check_poll_started, check_poll_not_closed, json_parser,
@@ -204,6 +212,15 @@ api.post('/poll/:id/vote',
         */
         poll_engine.vote(req.poll_id, req.auth_token, req.body)))
 
+
+// ----------------------------------- RESULT
+
 api.get('/poll/:id/results',
     get_poll_id, check_poll_closed,
     json_reser((req) => poll_engine.results(req.poll_id)))
+
+// ----------------------------------- SIMPLE GET
+
+api.get('/poll/:id',
+    get_poll_id,
+    json_reser((req) => poll_engine.get_poll_data(req.poll_id)))
