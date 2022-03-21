@@ -81,8 +81,8 @@ poll_engine.exists = (id) => {
 
 poll_engine.get_poll_data = (id) => {
     const poll = fetch_poll(id)
-    const { name, grades, choices } = poll
-    return { name, grades, choices }
+    const { name, grades, choices, start, end } = poll
+    return { name, grades, choices, start, end }
 }
 
 poll_engine.get_list = () => {
@@ -94,9 +94,10 @@ poll_engine.get_owned_list = (owner) => {
 }
 
 poll_engine.create_poll = (poll_data, owner) => {
-    const id = hash(poll_data.name)
 
     const hashed_owner = hash(owner)
+
+    const id = hash(poll_data.name + hashed_owner)
 
     poll_data.id = id
     poll_data.owner = hashed_owner
@@ -110,6 +111,17 @@ poll_engine.create_poll = (poll_data, owner) => {
     if (poll_engine.exists(id)) throw new Error(`poll ${id} alread exists`)
     save_poll(poll_data)
     return id
+}
+
+poll_engine.is_owner = (id, owner) => {
+    return fetch_poll(id).owner = hash(owner)
+}
+
+poll_engine.delete_poll = (id) => {
+    fetch_poll(id)
+    const path = poll_path(id)
+    fs.unlinkSync(path)
+    return true
 }
 
 poll_engine.start = (id) => {

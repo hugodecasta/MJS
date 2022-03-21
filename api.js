@@ -75,6 +75,12 @@ function check_vote_rights(req, res, next) {
     next()
 }
 
+function check_poll_owner(req, res, next) {
+    if (!poll_engine.is_owner(req.poll_id, req.auth_token))
+        return res.status(401).send('unauthorized owner')
+    next()
+}
+
 // ----------------------------------- ENTRY
 api.get('/', (req, res) => res.json('Yello'))
 
@@ -118,7 +124,7 @@ api.post('/poll/create',
         poll_engine.create_poll(req.body, req.auth_token)))
 
 api.put('/poll/:id/start',
-    parse_auth, check_admin, get_poll_id, check_poll_not_started, check_poll_not_closed,
+    parse_auth, check_admin, get_poll_id, check_poll_not_started, check_poll_owner, check_poll_not_closed,
     json_reser((req) =>
         /*
             #swagger.security = [{"Auth_user": []}]
@@ -131,7 +137,7 @@ api.put('/poll/:id/start',
         poll_engine.start(req.poll_id)))
 
 api.put('/poll/:id/close',
-    parse_auth, check_admin, get_poll_id, check_poll_started, check_poll_not_closed,
+    parse_auth, check_admin, get_poll_id, check_poll_started, check_poll_owner, check_poll_not_closed,
     json_reser((req) =>
         /*
             #swagger.security = [{"Auth_user": []}]
@@ -144,7 +150,7 @@ api.put('/poll/:id/close',
         poll_engine.close(req.poll_id)))
 
 api.post('/poll/:id/voter',
-    parse_auth, check_admin, get_poll_id, json_parser,
+    parse_auth, check_admin, get_poll_id, check_poll_owner, json_parser,
     json_reser((req) =>
         /*
             #swagger.security = [{"Auth_user": []}]
@@ -171,7 +177,7 @@ api.post('/poll/:id/voter',
         poll_engine.add_voter(req.poll_id, req.body.token)))
 
 api.delete('/poll/:id/voter',
-    parse_auth, check_admin, get_poll_id, json_parser,
+    parse_auth, check_admin, get_poll_id, check_poll_owner, json_parser,
     json_reser((req) =>
         /*
             #swagger.security = [{"Auth_user": []}]
@@ -196,6 +202,14 @@ api.delete('/poll/:id/voter',
             } 
         */
         poll_engine.remove_voter(req.poll_id, req.body.token)))
+
+api.delete('/poll/:id',
+    parse_auth, check_admin, get_poll_id, check_poll_owner,
+    json_reser((req) =>
+        /*
+            #swagger.security = [{"Auth_user": []}]
+        */
+        poll_engine.delete_poll(req.poll_id)))
 
 // ----------------------------------- VOTE
 

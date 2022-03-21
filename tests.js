@@ -253,6 +253,11 @@ test.serial('create', async t => {
     server_poll_id = await send('/api/poll/create', 'POST', server_poll_data, auth_used)
     t.pass()
 })
+test.serial('delete', async t => {
+    await t.notThrowsAsync(() => send('/api/poll/' + server_poll_id, 'DELETE', null, auth_used))
+    await t.throwsAsync(() => send('/api/poll/' + server_poll_id, 'DELETE', null, auth_used))
+    server_poll_id = await send('/api/poll/create', 'POST', server_poll_data, auth_used)
+})
 test.serial('get server data', async t => {
     const poll_data = await send('/api/poll/' + server_poll_id)
     t.is(poll_data.name, server_poll_data.name)
