@@ -16,6 +16,13 @@ Majority Judgment Server
  * install dev dependencies `npm i --dev`
  * test `npm test`
 
+## Generate doc
+
+for more infos, see [swagger-autogen documentation](https://www.npmjs.com/package/swagger-autogen)
+
+ * install dev dependencies `npm i --dev`
+ * test `npm run swagger-autogen`
+
 ## License
 [MIT](/LICENSE)
 
