@@ -79,29 +79,127 @@ api.get('/', (req, res) => res.json('Yello'))
 
 api.post('/poll/create',
     parse_auth, check_admin, json_parser,
-    json_reser((req) => poll_engine.create_poll(req.body)))
+    json_reser((req) =>
+        /*
+        #swagger.security = [{"Auth_user": []}]
+
+        #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                   "schema": {
+                        "type": "object",
+                        "properties": {
+                            "name": { type: "string", example: "caca" },
+                            "choices": { type: "Array of strings", example: ['Candidate A', 'Candidate B', '...'] },
+                            "grades": { optional: true, type: "Array of strings", example: ['A','B','C','D','E','F'] },
+                        },
+                    }
+                }
+            }
+        }
+          
+        #swagger.responses[200] = {
+               description: 'Newly created poll ID',
+               schema: 'abcde1234'
+        } 
+       */
+        poll_engine.create_poll(req.body)))
 
 api.put('/poll/:id/start',
     parse_auth, check_admin, get_poll_id, check_poll_not_started, check_poll_not_closed,
-    json_reser((req) => poll_engine.start(req.poll_id)))
+    json_reser((req) =>
+        /*
+            #swagger.security = [{"Auth_user": []}]
+            
+            #swagger.responses[200] = {
+               description: 'Poll start date (JS date)',
+               schema: 1647896248468
+            } 
+        */
+        poll_engine.start(req.poll_id)))
 
 api.put('/poll/:id/close',
     parse_auth, check_admin, get_poll_id, check_poll_started, check_poll_not_closed,
-    json_reser((req) => poll_engine.close(req.poll_id)))
+    json_reser((req) =>
+        /*
+            #swagger.security = [{"Auth_user": []}]
+            
+            #swagger.responses[200] = {
+               description: 'Poll end date (JS date)',
+               schema: 1647896248468
+            } 
+        */
+        poll_engine.close(req.poll_id)))
 
 api.post('/poll/:id/voter',
     parse_auth, check_admin, get_poll_id, json_parser,
-    json_reser((req) => poll_engine.add_voter(req.poll_id, req.body.token)))
+    json_reser((req) =>
+        /*
+            #swagger.security = [{"Auth_user": []}]
+
+            #swagger.requestBody = {
+                required: true,
+                content: {
+                    "application/json": {
+                    "schema": {
+                            "type": "object",
+                            "properties": {
+                                "token": { type: "string", example: "voter_token_1234" },
+                            },
+                        }
+                    }
+                }
+            }
+            
+            #swagger.responses[200] = {
+               description: 'Operation success flag',
+               schema: true
+            } 
+        */
+        poll_engine.add_voter(req.poll_id, req.body.token)))
 
 api.delete('/poll/:id/voter',
     parse_auth, check_admin, get_poll_id, json_parser,
-    json_reser((req) => poll_engine.remove_voter(req.poll_id, req.body.token)))
+    json_reser((req) =>
+        /*
+            #swagger.security = [{"Auth_user": []}]
+
+            #swagger.requestBody = {
+                required: true,
+                content: {
+                    "application/json": {
+                    "schema": {
+                            "type": "object",
+                            "properties": {
+                                "token": { type: "string", example: "voter_token_1234" },
+                            },
+                        }
+                    }
+                }
+            }
+            
+            #swagger.responses[200] = {
+               description: 'Operation success flag',
+               schema: true
+            } 
+        */
+        poll_engine.remove_voter(req.poll_id, req.body.token)))
 
 // ----------------------------------- POLL
 
 api.post('/poll/:id/vote',
     parse_auth, get_poll_id, check_vote_rights, check_poll_started, check_poll_not_closed, json_parser,
-    json_reser((req) => poll_engine.vote(req.poll_id, req.auth_token, req.body)))
+    json_reser((req) =>
+        /*
+            #swagger.security = [{"Auth_user": []}]
+            
+            #swagger.responses[200] = {
+               description: 'Operation success flag',
+               schema: true
+            } 
+        */
+        poll_engine.vote(req.poll_id, req.auth_token, req.body)))
 
 api.get('/poll/:id/results',
     get_poll_id, check_poll_closed,

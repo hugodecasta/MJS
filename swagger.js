@@ -1,4 +1,4 @@
-const swaggerAutogen = require('swagger-autogen')()
+const swaggerAutogen = require('swagger-autogen')({ openapi: '3.0.0', autoHeaders: false })
 
 const package = require('./package.json')
 
@@ -12,6 +12,17 @@ const doc = {
     },
     basePath: '/api',
     schemes: ['http', 'https'],
+    securityDefinitions: {
+        Auth_user: {
+            type: 'apiKey',
+            description: "Admin or Voter auth token",
+            name: 'Authorization',
+            in: 'header',
+        }
+    },
+    security: {
+        Auth_user: [],
+    }
 }
 
 swaggerAutogen(outputFile, endpointsFiles, doc)

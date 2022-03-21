@@ -1,11 +1,12 @@
 {
   "name": "mjs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Majority Judgment Server",
   "main": "index.js",
   "scripts": {
     "test": "ava tests.js",
-    "swagger-autogen": "node swagger.js"
+    "swagger-autogen": "node swagger.js",
+    "publish": "npm run swagger-autogen && npm test && git add . && git commit -m 'publish update' && git push"
   },
   "repository": {
     "type": "git",
@@ -25,13 +26,14 @@
   "dependencies": {
     "body-parser": "^1.19.2",
     "express": "^4.17.3",
+    "inquirer": "^8.2.1",
     "rimraf": "^3.0.2",
     "short-hash": "^1.0.0"
   },
   "devDependencies": {
-    "swagger-autogen": "^2.20.5",
-    "swagger-ui-express": "^4.3.0",
+    "ava": "^4.1.0",
     "node-fetch": "^2.6.7",
-    "ava": "^4.1.0"
+    "swagger-autogen": "^2.20.5",
+    "swagger-ui-express": "^4.3.0"
   }
 }

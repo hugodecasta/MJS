@@ -53,3 +53,7 @@ auth.delete_auth = (name) => {
     delete auths[auth_hash]
     return save_auth(auths)
 }
+
+auth.get_count = () => {
+    return Object.keys(auth_array()).length
+}

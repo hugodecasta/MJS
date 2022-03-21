@@ -1,15 +1,17 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
-    "version": "0.1.0",
+    "version": "0.3.0",
     "title": "Majority Judgment Server",
     "description": "MJS API documentation"
   },
-  "host": "localhost:3000",
-  "basePath": "/api",
-  "schemes": [
-    "http",
-    "https"
+  "servers": [
+    {
+      "url": "http://localhost:3000/api"
+    },
+    {
+      "url": "https://localhost:3000/api"
+    }
   ],
   "paths": {
     "/": {
@@ -26,22 +28,77 @@
     "/poll/create": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Newly created poll ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "abcde1234",
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "string",
+                  "example": "abcde1234",
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Auth_user": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "caca"
+                  },
+                  "choices": {
+                    "type": "Array of strings",
+                    "example": [
+                      "Candidate A",
+                      "Candidate B",
+                      "..."
+                    ]
+                  },
+                  "grades": {
+                    "optional": true,
+                    "type": "Array of strings",
+                    "example": [
+                      "A",
+                      "B",
+                      "C",
+                      "D",
+                      "E",
+                      "F"
+                    ]
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -54,17 +111,34 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Poll start date (JS date)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "example": 1647896248468,
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "number",
+                  "example": 1647896248468,
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -78,7 +152,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Auth_user": []
+          }
+        ]
       }
     },
     "/poll/{id}/close": {
@@ -89,17 +168,34 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Poll end date (JS date)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "example": 1647896248468,
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "number",
+                  "example": 1647896248468,
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -113,7 +209,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Auth_user": []
+          }
+        ]
       }
     },
     "/poll/{id}/voter": {
@@ -124,17 +225,34 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Operation success flag",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean",
+                  "example": true,
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "boolean",
+                  "example": true,
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -144,6 +262,27 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Auth_user": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "example": "voter_token_1234"
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -154,17 +293,34 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Operation success flag",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean",
+                  "example": true,
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "boolean",
+                  "example": true,
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -174,6 +330,27 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Auth_user": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "example": "voter_token_1234"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -186,17 +363,34 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Operation success flag",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean",
+                  "example": true,
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "boolean",
+                  "example": true,
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -210,7 +404,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Auth_user": []
+          }
+        ]
       }
     },
     "/poll/{id}/results": {
@@ -221,7 +420,9 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -240,5 +441,18 @@
         }
       }
     }
+  },
+  "components": {
+    "securitySchemes": {
+      "Auth_user": {
+        "type": "apiKey",
+        "description": "Admin or Voter auth token",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": {
+    "Auth_user": []
   }
 }
