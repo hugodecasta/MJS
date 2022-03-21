@@ -6,7 +6,7 @@
   "scripts": {
     "test": "ava tests.js",
     "swagger-autogen": "node swagger.js",
-    "publish": "npm run swagger-autogen && npm test && git add . && git commit -m 'publish update' && git pull && git push"
+    "publish": "npm run swagger-autogen && npm test && git add . && git commit -m 'publish update' || git pull && git push"
   },
   "repository": {
     "type": "git",
