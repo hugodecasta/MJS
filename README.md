@@ -1,7 +1,7 @@
 # MJS
 Majority Judgment Server
 
-**Pompé de <https://sondage.sirtak.fr/>**
+**Pompé de <https://vote.sirtak.fr/>**
 
 ## Launch
  * clone `git clone git@github.com:hugodecasta/MJS.git && cd MJS`
