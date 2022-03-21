@@ -1,7 +1,10 @@
 const api = require('express').Router()
 const json_parser = require('body-parser').json()
+const cors = require('cors')
 
 module.exports = api
+
+api.use(cors())
 
 const poll_engine = require('./poll_engine')
 const auth_engine = require('./auth_engine')

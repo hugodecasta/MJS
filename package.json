@@ -1,6 +1,6 @@
 {
   "name": "mjs",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Majority Judgment Server",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/hugodecasta/MJS#readme",
   "dependencies": {
     "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "inquirer": "^8.2.1",
     "rimraf": "^3.0.2",
