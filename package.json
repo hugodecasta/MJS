@@ -4,9 +4,10 @@
   "description": "Majority Judgment Server",
   "main": "index.js",
   "scripts": {
+    "launch": "npm run swagger-autogen && node .",
     "test": "ava tests.js",
     "swagger-autogen": "node swagger.js",
-    "publish": "npm run swagger-autogen && npm test && git add . && git commit -m 'publish update' || git pull && git push"
+    "publish": "npm test && git add . && git commit -m 'publish update' || git pull && git push"
   },
   "repository": {
     "type": "git",
@@ -29,12 +30,12 @@
     "express": "^4.17.3",
     "inquirer": "^8.2.1",
     "rimraf": "^3.0.2",
-    "short-hash": "^1.0.0"
+    "short-hash": "^1.0.0",
+    "swagger-autogen": "^2.20.5",
+    "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
     "ava": "^4.1.0",
-    "node-fetch": "^2.6.7",
-    "swagger-autogen": "^2.20.5",
-    "swagger-ui-express": "^4.3.0"
+    "node-fetch": "^2.6.7"
   }
 }
