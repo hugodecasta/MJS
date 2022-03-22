@@ -13,10 +13,11 @@ function save_auth(auths) {
 const auth = {}
 module.exports = auth
 
-auth.clear = (really = false) => {
-    if (!really) throw Error('clearing needs to be sure')
-    if (fs.existsSync(auth_dir))
+auth.clear = (force = false) => {
+    if (fs.existsSync(auth_dir)) {
+        if (!force) throw Error('cannot clear non empty without force')
         require('rimraf').sync(auth_dir)
+    }
 }
 
 // ------------------------------------------------------ UTILS

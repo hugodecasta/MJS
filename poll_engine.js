@@ -6,10 +6,11 @@ const polls_dir = `${__dirname}/poll`
 const poll_engine = {}
 module.exports = poll_engine
 
-poll_engine.clear = (really = false) => {
-    if (!really) throw Error('clearing needs to be sure')
-    if (fs.existsSync(polls_dir))
+poll_engine.clear = (force = false) => {
+    if (fs.existsSync(polls_dir)) {
+        if (!force) throw Error('cannot clear non empty without force')
         require('rimraf').sync(polls_dir)
+    }
 }
 
 const default_grades = ['excellent', 'very good', 'good', 'acceptable', 'poor', 'to reject']
@@ -81,9 +82,10 @@ poll_engine.exists = (id) => {
 
 poll_engine.get_poll_data = (id) => {
     const poll = fetch_poll(id)
-    const { name, grades, choices, start, end, voters } = poll
+    const { name, grades, choices, start, end, voters, votes } = poll
     const remaining_voters = Object.keys(voters).length
-    return { id, name, grades, choices, remaining_voters, start, end }
+    const votes_count = Object.keys(votes).length
+    return { id, name, grades, choices, remaining_voters, votes_count, start, end }
 }
 
 poll_engine.get_list = () => {

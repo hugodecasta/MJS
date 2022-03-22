@@ -10,8 +10,8 @@ let listening_server = null
 // ---------------------------------------- BEGIN
 
 test.serial.before(() => {
-    auth_engine.clear(true)
-    poll_engine.clear(true)
+    auth_engine.clear()
+    poll_engine.clear()
 })
 
 // ---------------------------------------- ENGINE TESTS
