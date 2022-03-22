@@ -87,8 +87,7 @@ poll_engine.get_poll_data = (id) => {
 }
 
 poll_engine.get_list = () => {
-    if (fs.existsSync(polls_dir))
-        require('rimraf').sync(polls_dir)
+    if (!fs.existsSync(polls_dir)) fs.mkdirSync(polls_dir)
     return fs.readdirSync(polls_dir).map(f => f.replace('.json', ''))
 }
 
