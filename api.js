@@ -81,6 +81,12 @@ function check_poll_owner(req, res, next) {
     next()
 }
 
+function create_waiter(ms) {
+    return function (req, res, next) {
+        setTimeout(next, ms)
+    }
+}
+
 // ----------------------------------- ENTRY
 api.get('/', (req, res) => res.json('Yello'))
 
@@ -204,7 +210,7 @@ api.delete('/poll/:id/voter',
         poll_engine.remove_voter(req.poll_id, req.body.token)))
 
 api.get('/poll/:id/voter',
-    parse_auth, get_poll_id, json_parser,
+    create_waiter(1000), parse_auth, get_poll_id, json_parser,
     json_reser((req) =>
         /*
             #swagger.security = [{"Auth_user": []}]
