@@ -279,6 +279,8 @@ test.serial('add voters', async t => {
     const err = await t.throwsAsync(() => send('/api/poll/' + server_poll_id + '/voter', 'POST', { token: voter_token }, auth_used))
     t.is(err.status, 500)
     await t.notThrowsAsync(() => send('/api/poll/' + server_poll_id + '/voter', 'POST', { token: 'caca' }, auth_used))
+    t.true(await send('/api/poll/' + server_poll_id + '/voter', 'GET', null, 'caca'))
+    t.false(await send('/api/poll/' + server_poll_id + '/voter', 'GET', null, auth_used))
 })
 test.serial('remove voter', async t => {
     await t.throwsAsync(() => send('/api/poll/' + server_poll_id + '/voter', 'DELETE', { token: 'pipi' }, auth_used))

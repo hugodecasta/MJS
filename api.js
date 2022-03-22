@@ -203,6 +203,19 @@ api.delete('/poll/:id/voter',
         */
         poll_engine.remove_voter(req.poll_id, req.body.token)))
 
+api.get('/poll/:id/voter',
+    parse_auth, get_poll_id, json_parser,
+    json_reser((req) =>
+        /*
+            #swagger.security = [{"Auth_user": []}]
+            
+            #swagger.responses[200] = {
+               description: 'Is voter or not',
+               schema: true
+            } 
+        */
+        poll_engine.is_voter(req.poll_id, req.auth_token)))
+
 api.delete('/poll/:id',
     parse_auth, check_admin, get_poll_id, check_poll_owner,
     json_reser((req) =>
