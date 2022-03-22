@@ -16,7 +16,7 @@ module.exports = auth
 auth.clear = (force = false) => {
     if (fs.existsSync(auth_dir)) {
         if (!force) throw Error('cannot clear non empty without force')
-        require('rimraf').sync(auth_dir)
+        else require('rimraf').sync(auth_dir)
     }
 }
 

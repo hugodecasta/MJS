@@ -9,7 +9,7 @@ module.exports = poll_engine
 poll_engine.clear = (force = false) => {
     if (fs.existsSync(polls_dir)) {
         if (!force) throw Error('cannot clear non empty without force')
-        require('rimraf').sync(polls_dir)
+        else require('rimraf').sync(polls_dir)
     }
 }
 
