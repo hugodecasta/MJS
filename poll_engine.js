@@ -81,8 +81,9 @@ poll_engine.exists = (id) => {
 
 poll_engine.get_poll_data = (id) => {
     const poll = fetch_poll(id)
-    const { name, grades, choices, start, end } = poll
-    return { id, name, grades, choices, start, end }
+    const { name, grades, choices, start, end, voters } = poll
+    const remaining_voters = Object.keys(voters).length
+    return { id, name, grades, choices, remaining_voters, start, end }
 }
 
 poll_engine.get_list = () => {

@@ -261,6 +261,7 @@ test.serial('delete', async t => {
 test.serial('get server data', async t => {
     const poll_data = await send('/api/poll/' + server_poll_id)
     t.is(poll_data.name, server_poll_data.name)
+    t.is(poll_data.remaining_voters, 0)
 })
 test.serial('get my list', async t => {
     await t.throwsAsync(() => send('/api/poll/list'))
