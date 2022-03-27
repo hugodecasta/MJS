@@ -11,7 +11,7 @@ module.exports = (choices, grades, votes) => {
     const median_index = Math.floor((vote_ids[0].length) / 2)
     const result_ids = vote_ids.map(gids => gids[median_index])
 
-    const ordered_choices_ids = result_ids.map((gid, i) => [i, gid]).sort(([, a], [, b]) => a - b).map(([cid]) => cid)
+    const ordered_choices_ids = vote_ids.map((gids, i) => [i, gids.reduce((a, b) => a + b, 0)]).sort(([, a], [, b]) => a - b).map(([cid]) => cid)
 
     const c_grades = vote_ids.map(gids => gids.map(gid => grades[gid]))
     const results = result_ids.map(gid => grades[gid])
