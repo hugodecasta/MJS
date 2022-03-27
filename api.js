@@ -114,6 +114,8 @@ api.post('/poll/create',
                         "type": "object",
                         "properties": {
                             "name": { type: "string", example: "caca" },
+                            "description": { type: "string", example: "this is a poll" },
+                            "tags": { type: "Array of strings", example: "['colored', 'big', '...']" },
                             "choices": { type: "Array of strings", example: ['Candidate A', 'Candidate B', '...'] },
                             "grades": { optional: true, type: "Array of strings", example: ['A','B','C','D','E','F'] },
                         },

@@ -82,10 +82,10 @@ poll_engine.exists = (id) => {
 
 poll_engine.get_poll_data = (id) => {
     const poll = fetch_poll(id)
-    const { name, grades, choices, start, end, voters, votes } = poll
+    const { name, description, tags, grades, choices, start, end, voters, votes } = poll
     const remaining_voters = Object.keys(voters).length
     const votes_count = Object.keys(votes).length
-    return { id, name, grades, choices, remaining_voters, votes_count, start, end }
+    return { id, description, tags, name, grades, choices, remaining_voters, votes_count, start, end }
 }
 
 poll_engine.get_list = () => {
@@ -104,6 +104,8 @@ poll_engine.create_poll = (poll_data, owner) => {
     const id = hash(poll_data.name + hashed_owner)
 
     poll_data.id = id
+    poll_data.tags = poll_data.tags ?? []
+    poll_data.description = poll_data.description ?? 'this is a poll'
     poll_data.owner = hashed_owner
     poll_data.start = poll_data.start ?? null
     poll_data.voters = poll_data.voters ?? {}
