@@ -17,6 +17,11 @@ module.exports = (choices, grades, votes) => {
     const results = result_ids.map(gid => grades[gid])
 
     const choices_votes = Object.fromEntries(c_grades.map((gs, i) => [choices[i], gs]))
+    const choices_votes_accumulated = Object.fromEntries(c_grades.map((gs, i) => [choices[i], gs.reduce((acc, g) => {
+        if (!(g in acc)) acc[g] = 0
+        acc[g]++
+        return acc
+    }, {})]))
     const choices_results = Object.fromEntries(results.map((g, i) => [choices[i], g]))
 
     const ordered_choices = ordered_choices_ids.map(cid => choices[cid])
@@ -24,7 +29,7 @@ module.exports = (choices, grades, votes) => {
     const winner_choice = ordered_choices[0]
 
     return {
-        choices_votes, choices_results,
+        choices_votes, choices_votes_accumulated, choices_results,
         ordered_choices,
         winner_choice
     }
